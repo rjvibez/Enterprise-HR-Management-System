@@ -1,0 +1,6 @@
+employee_id,first_name,last_name,email,phone,department,designation,salary,joining_date,status
+EMP001,Nisha,Sharma,nisha.sharma@technova.com,9876543210,AI,AI Engineer,71500.0,2026-08-01,Active
+EMP002,Arjun,Nair,rahul.kumar@technova.com,9876543211,AI,Junior Data Analyst,55000.0,2025-06-15,Inactive
+EMP003,Anjali,menon,anjali.menon@technova.com,987564232,Hr,hr manager,60000.0,2026-05-22,active
+EMP004,Mani,gary,gary@gmail.com,55668544,ai analyst,ai research,59999.0,26-0402,active
+EMPOO5,ambani,mehra,mehra@gmail.com,4543343,ai research,ai,90000.0,26-05-4,active

@@ -13,7 +13,7 @@ st.set_page_config(
     page_title="Nova HR | Enterprise Management System",
     page_icon="🏢",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
 
 # Safe import of Plotly
@@ -34,32 +34,18 @@ except Exception as e:
     SERVICE_ERROR = str(e)
 
 # ---------------------------------------------------------
-# EXECUTIVE CSS DESIGN SYSTEM (NOVA HR THEME)
+# EXECUTIVE CSS STYLING (NOVA HR DESIGN SYSTEM)
 # ---------------------------------------------------------
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
     html, body, [class*="css"] {
-        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     .stApp {
-        background-color: #F8FAFC !important;
-    }
-
-    #MainMenu, header, footer {
-        visibility: hidden !important;
-    }
-
-    .main .block-container {
-        padding-top: 1rem !important;
-        padding-bottom: 2.5rem !important;
-        max-width: 96% !important;
-    }
-
-    [data-testid="stSidebar"] {
-        display: none !important;
+        background-color: #F8FAFC;
     }
 
     /* Nova Header Bar */
@@ -67,7 +53,7 @@ st.markdown("""
         background: #FFFFFF;
         border: 1px solid #E2E8F0;
         border-radius: 16px;
-        padding: 0.9rem 1.6rem;
+        padding: 1rem 1.6rem;
         margin-bottom: 1.2rem;
         display: flex;
         justify-content: space-between;
@@ -80,13 +66,13 @@ st.markdown("""
         gap: 0.75rem;
     }
     .nova-brand-icon {
-        width: 40px;
-        height: 40px;
+        width: 42px;
+        height: 42px;
         border-radius: 12px;
         background: linear-gradient(135deg, #0F62FE, #2563EB);
         color: white;
         font-weight: 800;
-        font-size: 1.2rem;
+        font-size: 1.25rem;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -94,7 +80,7 @@ st.markdown("""
     }
     .nova-brand-title {
         font-weight: 800;
-        font-size: 1.2rem;
+        font-size: 1.25rem;
         color: #0F172A;
         line-height: 1.1;
         letter-spacing: -0.4px;
@@ -112,7 +98,7 @@ st.markdown("""
         background-color: #EFF6FF;
         color: #1E40AF;
         border: 1px solid #BFDBFE;
-        padding: 0.3rem 0.85rem;
+        padding: 0.35rem 0.85rem;
         border-radius: 9999px;
         font-size: 0.75rem;
         font-weight: 700;
@@ -120,7 +106,7 @@ st.markdown("""
     .nova-profile-badge {
         display: flex;
         align-items: center;
-        gap: 0.6rem;
+        gap: 0.65rem;
         border-left: 1px solid #E2E8F0;
         padding-left: 1rem;
     }
@@ -193,8 +179,6 @@ st.markdown("""
     }
     .text-emerald { color: #059669; }
     .text-indigo { color: #2563EB; }
-    .text-amber { color: #D97706; }
-    .text-rose { color: #E11D48; }
 
     /* Content Cards */
     .content-card {
@@ -240,15 +224,6 @@ st.markdown("""
         font-weight: 700;
         font-size: 0.78rem;
         display: inline-block;
-    }
-
-    /* Forms */
-    div[data-testid="stForm"] {
-        border: 1px solid #E2E8F0;
-        border-radius: 16px;
-        padding: 1.75rem;
-        background-color: #FFFFFF;
-        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
     }
 
     /* Streamlit Native Tabs Styling (Single Line) */
@@ -377,9 +352,18 @@ def delete_emp(emp_id):
         return False, "Local database service unavailable."
 
 # ---------------------------------------------------------
-# NOVA HR TOP HEADER BAR (EXACT NEXT.JS MATCH)
+# SIDEBAR CONTROLS
 # ---------------------------------------------------------
-api_badge = "🟢 REST API Live" if api_active else "🔵 Standalone SQLite Mode"
+with st.sidebar:
+    st.markdown("### 🏢 Nova HR Settings")
+    st.info(f"**Mode**: {'🟢 REST API Live' if api_active else '🔵 Standalone SQLite'}")
+    if st.button("🔄 Refresh Data"):
+        st.rerun()
+
+# ---------------------------------------------------------
+# NOVA HR TOP HEADER BAR
+# ---------------------------------------------------------
+api_badge = "🟢 REST API Live" if api_active else "🔵 Standalone SQLite Engine"
 
 st.markdown(f"""
     <div class="nova-header">
@@ -404,7 +388,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # ---------------------------------------------------------
-# STREAMLIT NATIVE SINGLE-LINE TOP TABS
+# SINGLE-LINE TOP TAB NAVIGATION
 # ---------------------------------------------------------
 t1, t2, t3, t4, t5, t6, t7 = st.tabs([
     "📊 Overview",
@@ -428,7 +412,7 @@ with t1:
     tot_pay = analytics.get("total_payroll", sum(e.salary for e in employees))
     avg_sal = analytics.get("average_salary", (tot_pay / tot_emp) if tot_emp > 0 else 0)
 
-    # 4 Linked KPI Cards with top blue indicator line
+    # 4 Linked KPI Cards
     c1, c2, c3, c4 = st.columns(4)
 
     with c1:
@@ -454,7 +438,7 @@ with t1:
                 </div>
                 <div class="metric-value text-emerald">{act_emp:,}</div>
                 <div class="metric-sub text-emerald">
-                    <span>▲ +2.4%</span> • {((act_emp/tot_emp)*100 if tot_emp>0 else 0):.1f}% active retention
+                    <span>▲ +2.4%</span> • {((act_emp/tot_emp)*100 if tot_emp>0 else 0):.1f}% retention
                 </div>
             </div>
         """, unsafe_allow_html=True)
@@ -489,7 +473,7 @@ with t1:
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # SVG Wave Chart Container (Matching Razorpay / Nova Growth Chart)
+    # SVG Wave Chart Container
     st.markdown(f"""
         <div class="content-card">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
@@ -502,21 +486,20 @@ with t1:
                     <span style="color:#94A3B8;">● Last Period</span>
                 </div>
             </div>
-            <div style="position:relative; width:100%; height:200px;">
-                <svg viewBox="0 0 1000 200" style="width:100%; height:100%;" preserveAspectRatio="none">
+            <div style="position:relative; width:100%; height:180px;">
+                <svg viewBox="0 0 1000 180" style="width:100%; height:100%;" preserveAspectRatio="none">
                     <defs>
                         <linearGradient id="stBlueGrad" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.35"/>
                             <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.0"/>
                         </linearGradient>
                     </defs>
-                    <line x1="0" y1="50" x2="1000" y2="50" stroke="#F1F5F9" stroke-width="1"/>
-                    <line x1="0" y1="100" x2="1000" y2="100" stroke="#F1F5F9" stroke-width="1"/>
-                    <line x1="0" y1="150" x2="1000" y2="150" stroke="#F1F5F9" stroke-width="1"/>
-                    <path d="M 0 150 C 150 130, 300 80, 450 110 C 600 140, 750 40, 1000 70 L 1000 200 L 0 200 Z" fill="url(#stBlueGrad)" />
-                    <path d="M 0 150 C 150 130, 300 80, 450 110 C 600 140, 750 40, 1000 70" fill="none" stroke="#2563EB" stroke-width="3.5" />
-                    <line x1="450" y1="0" x2="450" y2="200" stroke="#3B82F6" stroke-width="1" stroke-dasharray="2 2"/>
-                    <circle cx="450" cy="110" r="5" fill="#2563EB" stroke="#FFFFFF" stroke-width="2.5"/>
+                    <line x1="0" y1="45" x2="1000" y2="45" stroke="#F1F5F9" stroke-width="1"/>
+                    <line x1="0" y1="90" x2="1000" y2="90" stroke="#F1F5F9" stroke-width="1"/>
+                    <line x1="0" y1="135" x2="1000" y2="135" stroke="#F1F5F9" stroke-width="1"/>
+                    <path d="M 0 135 C 150 115, 300 70, 450 95 C 600 120, 750 35, 1000 60 L 1000 180 L 0 180 Z" fill="url(#stBlueGrad)" />
+                    <path d="M 0 135 C 150 115, 300 70, 450 95 C 600 120, 750 35, 1000 60" fill="none" stroke="#2563EB" stroke-width="3" />
+                    <circle cx="450" cy="95" r="5" fill="#2563EB" stroke="#FFFFFF" stroke-width="2"/>
                 </svg>
             </div>
             <div style="display:flex; justify-content:space-between; font-size:0.72rem; font-weight:700; color:#94A3B8; margin-top:0.5rem;">
@@ -543,7 +526,7 @@ with t1:
                     df_dept, values="Employees", names="Department", hole=0.5,
                     color_discrete_sequence=["#2563EB", "#10B981", "#F59E0B", "#EC4899", "#8B5CF6", "#3B82F6"]
                 )
-                fig_dept.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=300)
+                fig_dept.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=280)
                 st.plotly_chart(fig_dept, use_container_width=True)
             else:
                 st.bar_chart(df_dept.set_index("Department"))
@@ -558,13 +541,13 @@ with t1:
                     dept_payroll, x="department", y="salary",
                     color="salary", color_continuous_scale="Blues", text_auto="$.2s"
                 )
-                fig_pay.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=300, coloraxis_showscale=False)
+                fig_pay.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=280, coloraxis_showscale=False)
                 st.plotly_chart(fig_pay, use_container_width=True)
             else:
                 st.bar_chart(dept_payroll.set_index("department"))
 
 # ---------------------------------------------------------
-# TAB 2: DIRECTORY (WORKFORCE DIRECTORY & EXPORT)
+# TAB 2: DIRECTORY
 # ---------------------------------------------------------
 with t2:
     st.markdown("### 📋 Workforce Directory & Records")
@@ -575,7 +558,7 @@ with t2:
         f1, f2, f3 = st.columns([2, 1, 1])
 
         with f1:
-            search_term = st.text_input("🔍 Quick Keyword Search", placeholder="Search Name, ID, Dept, Designation, Email...")
+            search_term = st.text_input("🔍 Quick Search", placeholder="Search Name, ID, Dept, Email...")
         with f2:
             dept_opts = ["All"] + sorted(list(df["department"].dropna().unique()))
             selected_dept = st.selectbox("Department Filter", dept_opts)
@@ -675,8 +658,6 @@ with t3:
                 </div>
             """, unsafe_allow_html=True)
 
-            # Salary Hike & Actions
-            st.markdown("##### 💼 Direct Profile Management Actions")
             ac1, ac2 = st.columns(2)
             with ac1:
                 hike_pct = st.slider("Apply Salary Hike (%)", min_value=1, max_value=50, value=10)

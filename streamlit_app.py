@@ -399,21 +399,64 @@ def delete_emp(emp_id):
         return False, "Local database service unavailable."
 
 # ---------------------------------------------------------
-# HERO BANNER HEADER
+# NOVA HR TOP HEADER BAR & HORIZONTAL NAVIGATION
 # ---------------------------------------------------------
-st.markdown("""
-    <div class="hero-banner">
-        <div class="hero-title-group">
-            <h1>Nova HR Enterprise Management System</h1>
-            <p>Executive workforce directory, real-time analytics & automated record management</p>
+api_status_html = "🟢 REST API Live" if api_active else "🔵 Local SQLite Mode"
+api_status_class = "rz-badge" if api_active else "rz-badge"
+
+st.markdown(f"""
+    <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 1rem 1.5rem; margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(15,23,42,0.05);">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div style="width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, #0F62FE, #2563EB); color: white; font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(37,99,235,0.25);">
+                🏢
+            </div>
+            <div>
+                <div style="font-weight: 800; font-size: 1.2rem; color: #0F172A; line-height: 1.2; tracking-tight: -0.5px;">
+                    Nova <span style="color: #2563EB;">HR</span>
+                </div>
+                <div style="font-size: 0.7rem; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px;">
+                    Enterprise Management System
+                </div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <div style="background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E40AF; padding: 0.3rem 0.8rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700;">
+                {api_status_html}
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.6rem; border-left: 1px solid #E2E8F0; padding-left: 1rem;">
+                <div style="width: 34px; height: 34px; border-radius: 50%; background: #1E293B; color: white; font-weight: 800; font-size: 0.75rem; display: flex; align-items: center; justify-content: center;">
+                    RM
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <span style="font-size: 0.78rem; font-weight: 800; color: #0F172A; line-height: 1.1;">Rajesh Mani</span>
+                    <span style="font-size: 0.65rem; font-weight: 600; color: #64748B;">HR Director</span>
+                </div>
+            </div>
         </div>
     </div>
 """, unsafe_allow_html=True)
 
+# Horizontal Top Navigation Menu Tabs
+menu = st.radio(
+    "",
+    [
+        "📊 Overview",
+        "📋 Directory",
+        "🔍 Search",
+        "➕ Add",
+        "🗑️ Delete",
+        "📈 Payroll",
+        "⚙️ System"
+    ],
+    horizontal=True
+)
+
+st.markdown("<div style='margin-bottom: 1.2rem;'></div>", unsafe_allow_html=True)
+
 # ---------------------------------------------------------
-# MODULE 1: DASHBOARD
+# MODULE 1: DASHBOARD / OVERVIEW
 # ---------------------------------------------------------
-if menu == "📊 Dashboard":
+if menu == "📊 Overview" or menu == "📊 Dashboard":
     st.markdown("""
         <div class="section-header">
             <h3>📊 Executive Overview & Workforce Analytics</h3>
@@ -577,9 +620,9 @@ if menu == "📊 Dashboard":
         )
 
 # ---------------------------------------------------------
-# MODULE 2: VIEW EMPLOYEES
+# MODULE 2: VIEW EMPLOYEES / DIRECTORY
 # ---------------------------------------------------------
-elif menu == "📋 View Employees":
+elif menu == "📋 Directory" or menu == "📋 View Employees":
     st.markdown("""
         <div class="section-header">
             <h3>📋 Workforce Directory</h3>
@@ -702,7 +745,7 @@ elif menu == "📋 View Employees":
 # ---------------------------------------------------------
 # MODULE 3: ADD EMPLOYEE
 # ---------------------------------------------------------
-elif menu == "➕ Add Employee":
+elif menu == "➕ Add" or menu == "➕ Add Employee":
     st.markdown("""
         <div class="section-header">
             <h3>➕ Register New Employee Record</h3>
@@ -768,7 +811,7 @@ elif menu == "➕ Add Employee":
 # ---------------------------------------------------------
 # MODULE 4: SEARCH & PROFILE
 # ---------------------------------------------------------
-elif menu == "🔍 Search & Profile":
+elif menu == "🔍 Search" or menu == "🔍 Search & Profile":
     st.markdown("""
         <div class="section-header">
             <h3>🔍 Employee Profile & Quick Actions</h3>
@@ -940,7 +983,7 @@ elif menu == "✏️ Update Employee":
 # ---------------------------------------------------------
 # MODULE 6: DELETE EMPLOYEE
 # ---------------------------------------------------------
-elif menu == "🗑️ Delete Employee":
+elif menu == "🗑️ Delete" or menu == "🗑️ Delete Employee":
     st.markdown("""
         <div class="section-header">
             <h3>🗑️ Delete Employee Record</h3>
@@ -982,7 +1025,7 @@ elif menu == "🗑️ Delete Employee":
 # ---------------------------------------------------------
 # MODULE 7: SYSTEM & BACKUP
 # ---------------------------------------------------------
-elif menu == "⚙️ System & Backup":
+elif menu == "⚙️ System" or menu == "⚙️ System & Backup" or menu == "📈 Payroll":
     st.markdown("""
         <div class="section-header">
             <h3>⚙️ System Status, Data Backup & Seeding</h3>

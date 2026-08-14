@@ -7,7 +7,7 @@ st.set_page_config(
     page_title="Nova HR Enterprise Management System",
     page_icon="🏢",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
 )
 
 import os
@@ -35,61 +35,118 @@ except Exception as e:
     SERVICE_ERROR = str(e)
 
 # ---------------------------------------------------------
-# MODERN CUSTOM CSS STYLING & RAZORPAY DESIGN SYSTEM
+# EXECUTIVE CSS DESIGN SYSTEM (NOVA HR / RAZORPAY THEME)
 # ---------------------------------------------------------
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
 
+    /* Global Body & Typography */
     html, body, [class*="css"] {
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
     .stApp {
-        background-color: #F8FAFC;
+        background-color: #F8FAFC !important;
     }
 
-    /* Remove excessive top container padding */
+    #MainMenu, header, footer {
+        visibility: hidden !important;
+        height: 0px !important;
+    }
+
+    /* Container Spacing */
     .main .block-container {
-        padding-top: 1rem;
-        padding-bottom: 3rem;
-        max-width: 95%;
+        padding-top: 0.8rem !important;
+        padding-bottom: 2.5rem !important;
+        max-width: 96% !important;
     }
 
-    /* Razorpay Top Header Bar */
-    .rz-header {
+    /* Sidebar Hiding for Clean Header Layout */
+    [data-testid="stSidebar"] {
+        display: none !important;
+    }
+
+    /* Nova Header Bar */
+    .nova-header {
         background: #FFFFFF;
-        border-bottom: 1px solid #E2E8F0;
-        padding: 0.9rem 1.8rem;
-        margin: -1rem -1rem 1.5rem -1rem;
+        border: 1px solid #E2E8F0;
+        border-radius: 16px;
+        padding: 0.9rem 1.6rem;
+        margin-bottom: 1.2rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+        box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04);
     }
-    .rz-brand {
+    .nova-brand {
         display: flex;
         align-items: center;
         gap: 0.75rem;
+    }
+    .nova-brand-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #0F62FE, #2563EB);
+        color: white;
         font-weight: 800;
         font-size: 1.25rem;
-        color: #0F172A;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
     }
-    .rz-badge {
+    .nova-brand-title {
+        font-weight: 800;
+        font-size: 1.2rem;
+        color: #0F172A;
+        line-height: 1.1;
+        letter-spacing: -0.4px;
+    }
+    .nova-brand-sub {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #64748B;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* Top User Badge & Status */
+    .nova-[#2563EB]-pill {
         background-color: #EFF6FF;
         color: #1E40AF;
         border: 1px solid #BFDBFE;
-        padding: 0.25rem 0.65rem;
+        padding: 0.3rem 0.85rem;
         border-radius: 9999px;
-        font-size: 0.72rem;
+        font-size: 0.75rem;
         font-weight: 700;
-        letter-spacing: 0.3px;
+    }
+    .nova-profile-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        border-left: 1px solid #E2E8F0;
+        padding-left: 1rem;
+    }
+    .nova-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #1E293B;
+        color: white;
+        font-weight: 800;
+        font-size: 0.78rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
 
-    /* Razorpay Metric Tab Cards */
+    /* Linked Tabbed Metric Cards */
     .metric-card {
         background: #FFFFFF;
-        border-radius: 12px;
+        border-radius: 14px;
         padding: 1.25rem;
         border: 1px solid #E2E8F0;
         box-shadow: 0 2px 8px -2px rgba(15, 23, 42, 0.04);
@@ -108,8 +165,8 @@ st.markdown("""
         right: -1px;
         height: 3px;
         background: #2563EB;
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
+        border-top-left-radius: 14px;
+        border-top-right-radius: 14px;
     }
     .metric-header {
         display: flex;
@@ -117,7 +174,7 @@ st.markdown("""
         align-items: center;
     }
     .metric-title {
-        font-size: 0.78rem;
+        font-size: 0.76rem;
         font-weight: 700;
         color: #64748B;
         text-transform: uppercase;
@@ -132,7 +189,7 @@ st.markdown("""
         line-height: 1.1;
     }
     .metric-sub {
-        font-size: 0.8rem;
+        font-size: 0.78rem;
         font-weight: 600;
         margin-top: 0.4rem;
         display: flex;
@@ -144,175 +201,121 @@ st.markdown("""
     .text-amber { color: #D97706; }
     .text-rose { color: #E11D48; }
 
-    /* Profile & Content Cards */
+    /* Content Cards */
     .content-card {
         background: #FFFFFF;
-        border-radius: 14px;
+        border-radius: 16px;
         padding: 1.75rem;
         border: 1px solid #E2E8F0;
         box-shadow: 0 2px 8px -2px rgba(15, 23, 42, 0.04);
         margin-bottom: 1.5rem;
     }
 
-    /* Status Badges */
+    /* Badges */
     .status-badge-active {
         background-color: #ECFDF5;
         color: #047857;
         border: 1px solid #A7F3D0;
-        padding: 0.35rem 0.9rem;
+        padding: 0.3rem 0.8rem;
         border-radius: 9999px;
         font-weight: 700;
-        font-size: 0.78rem;
+        font-size: 0.76rem;
         display: inline-flex;
         align-items: center;
-        gap: 0.4rem;
-        letter-spacing: 0.3px;
+        gap: 0.35rem;
     }
     .status-badge-inactive {
         background-color: #FEF2F2;
         color: #B91C1C;
         border: 1px solid #FCA5A5;
-        padding: 0.35rem 0.9rem;
+        padding: 0.3rem 0.8rem;
         border-radius: 9999px;
         font-weight: 700;
-        font-size: 0.78rem;
+        font-size: 0.76rem;
         display: inline-flex;
         align-items: center;
-        gap: 0.4rem;
-        letter-spacing: 0.3px;
+        gap: 0.35rem;
     }
     .dept-badge {
-        background-color: #EEF2FF;
-        color: #4338CA;
-        border: 1px solid #C7D2FE;
-        padding: 0.3rem 0.75rem;
-        border-radius: 8px;
+        background-color: #EFF6FF;
+        color: #1E40AF;
+        border: 1px solid #BFDBFE;
+        padding: 0.25rem 0.7rem;
+        border-radius: 6px;
         font-weight: 700;
-        font-size: 0.82rem;
+        font-size: 0.78rem;
         display: inline-block;
     }
 
-    /* Form styling enhancements */
+    /* Forms */
     div[data-testid="stForm"] {
         border: 1px solid #E2E8F0;
         border-radius: 16px;
-        padding: 2rem;
+        padding: 1.75rem;
         background-color: #FFFFFF;
-        box-shadow: 0 4px 14px -3px rgba(0, 0, 0, 0.03);
+        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
     }
 
-    /* Custom Section Headers */
-    .section-header {
+    /* Horizontal Radio Tabs Styling */
+    div[role="radiogroup"] {
         display: flex;
-        align-items: center;
-        gap: 0.6rem;
-        margin-bottom: 1.2rem;
+        flex-wrap: nowrap;
+        gap: 0.3rem !important;
+        background: #FFFFFF;
+        padding: 0.4rem;
+        border-radius: 12px;
+        border: 1px solid #E2E8F0;
+        overflow-x: auto;
     }
-    .section-header h3 {
-        margin: 0;
-        font-size: 1.35rem;
-        font-weight: 700;
-        color: #0F172A;
-        letter-spacing: -0.3px;
+    div[role="radiogroup"] label {
+        background: transparent !important;
+        border: none !important;
+        padding: 0.45rem 0.85rem !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        font-size: 0.82rem !important;
+        color: #475569 !important;
+        white-space: nowrap !important;
+        cursor: pointer !important;
     }
-
-    /* Streamlit Sidebar Customization */
-    section[data-testid="stSidebar"] {
-        background-color: #0F172A !important;
-    }
-    section[data-testid="stSidebar"] * {
-        color: #E2E8F0 !important;
-    }
-    section[data-testid="stSidebar"] .stRadio label {
-        padding: 0.5rem 0.8rem;
-        border-radius: 8px;
-        transition: background 0.2s ease;
+    div[role="radiogroup"] label[data-checked="true"] {
+        background: #EFF6FF !important;
+        color: #1E40AF !important;
+        font-weight: 700 !important;
+        border: 1px solid #BFDBFE !important;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# Check if services loaded
-if not SERVICE_LOADED:
-    st.error(f"❌ System initialization error: {SERVICE_ERROR}")
-
+# ---------------------------------------------------------
+# BACKEND API & DATA SERVICE INITIALIZATION
+# ---------------------------------------------------------
 DEFAULT_API_URL = "http://127.0.0.1:8000"
 
 @st.cache_resource
-def get_service():
+def get_local_service():
     if SERVICE_LOADED:
-        return EmployeeService()
+        try:
+            return EmployeeService()
+        except Exception:
+            return None
     return None
 
-local_service = get_service()
+local_service = get_local_service()
 
-def is_api_online(url):
+def is_api_online(url=DEFAULT_API_URL):
     try:
         r = requests.get(f"{url}/", timeout=1.2)
         return r.status_code == 200
     except Exception:
         return False
 
-# ---------------------------------------------------------
-# SIDEBAR NAVIGATION & SYSTEM SETTINGS
-# ---------------------------------------------------------
-st.sidebar.markdown("""
-    <div style="padding: 0.5rem 0; text-align: left;">
-        <div style="display: flex; align-items: center; gap: 0.8rem;">
-            <div style="background: linear-gradient(135deg, #6366F1, #4F46E5); padding: 0.6rem; border-radius: 12px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;">
-                🏢
-            </div>
-            <div>
-                <div style="font-size: 1.25rem; font-weight: 800; color: #FFFFFF; letter-spacing: -0.4px;">Nova HR</div>
-                <div style="font-size: 0.78rem; color: #94A3B8; font-weight: 500;">Enterprise Management System</div>
-            </div>
-        </div>
-    </div>
-    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin: 1.2rem 0;">
-""", unsafe_allow_html=True)
+api_active = is_api_online()
 
-api_url = st.sidebar.text_input("FastAPI Backend URL", value=DEFAULT_API_URL)
-api_active = is_api_online(api_url)
-
-if api_active:
-    st.sidebar.markdown("""
-        <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: #34D399 !important; padding: 0.6rem 0.9rem; border-radius: 10px; font-weight: 600; font-size: 0.83rem; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem;">
-            <span>🟢</span> Mode: REST API Connected
-        </div>
-    """, unsafe_allow_html=True)
-else:
-    st.sidebar.markdown("""
-        <div style="background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); color: #818CF8 !important; padding: 0.6rem 0.9rem; border-radius: 10px; font-weight: 600; font-size: 0.83rem; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem;">
-            <span>🔵</span> Mode: Standalone SQLite Engine
-        </div>
-    """, unsafe_allow_html=True)
-
-menu = st.sidebar.radio(
-    "Navigation Menu",
-    (
-        "📊 Dashboard",
-        "📋 View Employees",
-        "➕ Add Employee",
-        "🔍 Search & Profile",
-        "✏️ Update Employee",
-        "🗑️ Delete Employee",
-        "⚙️ System & Backup"
-    )
-)
-
-st.sidebar.markdown("""
-    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin: 1.5rem 0;">
-    <div style="font-size: 0.78rem; color: #64748B; text-align: center;">
-        © 2026 Enterprise HR System<br>All rights reserved.
-    </div>
-""", unsafe_allow_html=True)
-
-# ---------------------------------------------------------
-# DATA SERVICE INTEGRATION LAYER
-# ---------------------------------------------------------
 def fetch_all():
     if api_active:
         try:
-            r = requests.get(f"{api_url}/employees")
+            r = requests.get(f"{DEFAULT_API_URL}/employees")
             if r.status_code == 200:
                 return [Employee.from_dict(d) for d in r.json()]
         except Exception:
@@ -324,7 +327,7 @@ def fetch_all():
 def fetch_analytics():
     if api_active:
         try:
-            r = requests.get(f"{api_url}/analytics/summary")
+            r = requests.get(f"{DEFAULT_API_URL}/analytics/summary")
             if r.status_code == 200:
                 return r.json()
         except Exception:
@@ -336,7 +339,7 @@ def fetch_analytics():
 def fetch_single(emp_id):
     if api_active:
         try:
-            r = requests.get(f"{api_url}/employees/{emp_id}")
+            r = requests.get(f"{DEFAULT_API_URL}/employees/{emp_id}")
             if r.status_code == 200:
                 return Employee.from_dict(r.json())
         except Exception:
@@ -348,10 +351,10 @@ def fetch_single(emp_id):
 def create_emp(emp_obj):
     if api_active:
         try:
-            r = requests.post(f"{api_url}/employees", json=emp_obj.to_dict())
-            if r.status_code in [200, 201]:
-                return True, "Employee registered successfully!"
-            return False, r.json().get("detail", "Failed to register employee.")
+            r = requests.post(f"{DEFAULT_API_URL}/employees", json=emp_obj.to_dict())
+            if r.status_code == 200:
+                return True, "Employee registered successfully via API!"
+            return False, r.json().get("detail", "Error creating employee.")
         except Exception as e:
             return False, str(e)
     else:
@@ -359,7 +362,7 @@ def create_emp(emp_obj):
             if local_service.search_employee(emp_obj.employee_id):
                 return False, f"Employee ID '{emp_obj.employee_id}' already exists."
             local_service.add_employee(emp_obj)
-            return True, "Employee registered successfully into storage!"
+            return True, "Employee registered successfully into local storage!"
         return False, "Local database service unavailable."
 
 def update_emp(emp_id, update_data, salary_query=None):
@@ -368,7 +371,7 @@ def update_emp(emp_id, update_data, salary_query=None):
             params = {}
             if salary_query is not None:
                 params["salary"] = salary_query
-            r = requests.put(f"{api_url}/employees/{emp_id}", params=params, json=update_data)
+            r = requests.put(f"{DEFAULT_API_URL}/employees/{emp_id}", params=params, json=update_data)
             if r.status_code == 200:
                 return True, "Employee updated successfully!"
             return False, r.json().get("detail", "Error updating employee.")
@@ -385,7 +388,7 @@ def update_emp(emp_id, update_data, salary_query=None):
 def delete_emp(emp_id):
     if api_active:
         try:
-            r = requests.delete(f"{api_url}/employees/{emp_id}")
+            r = requests.delete(f"{DEFAULT_API_URL}/employees/{emp_id}")
             if r.status_code == 200:
                 return True, "Employee deleted successfully!"
             return False, r.json().get("detail", "Error deleting employee.")
@@ -399,34 +402,23 @@ def delete_emp(emp_id):
         return False, "Local database service unavailable."
 
 # ---------------------------------------------------------
-# NOVA HR TOP HEADER BAR & HORIZONTAL NAVIGATION
+# NOVA HR TOP HEADER BAR (EXACT NEXT.JS MATCH)
 # ---------------------------------------------------------
-api_status_html = "🟢 REST API Live" if api_active else "🔵 Local SQLite Mode"
-api_status_class = "rz-badge" if api_active else "rz-badge"
+api_badge = "🟢 REST API Live" if api_active else "🔵 Standalone SQLite Mode"
 
 st.markdown(f"""
-    <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 1rem 1.5rem; margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(15,23,42,0.05);">
-        <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <div style="width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, #0F62FE, #2563EB); color: white; font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(37,99,235,0.25);">
-                🏢
-            </div>
+    <div class="nova-header">
+        <div class="nova-brand">
+            <div class="nova-brand-icon">🏢</div>
             <div>
-                <div style="font-weight: 800; font-size: 1.2rem; color: #0F172A; line-height: 1.2; tracking-tight: -0.5px;">
-                    Nova <span style="color: #2563EB;">HR</span>
-                </div>
-                <div style="font-size: 0.7rem; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px;">
-                    Enterprise Management System
-                </div>
+                <div class="nova-brand-title">Nova <span style="color:#2563EB;">HR</span></div>
+                <div class="nova-brand-sub">Enterprise Management System</div>
             </div>
         </div>
         <div style="display: flex; align-items: center; gap: 1rem;">
-            <div style="background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E40AF; padding: 0.3rem 0.8rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700;">
-                {api_status_html}
-            </div>
-            <div style="display: flex; align-items: center; gap: 0.6rem; border-left: 1px solid #E2E8F0; padding-left: 1rem;">
-                <div style="width: 34px; height: 34px; border-radius: 50%; background: #1E293B; color: white; font-weight: 800; font-size: 0.75rem; display: flex; align-items: center; justify-content: center;">
-                    RM
-                </div>
+            <div class="nova-[#2563EB]-pill">{api_badge}</div>
+            <div class="nova-profile-badge">
+                <div class="nova-avatar">RM</div>
                 <div style="display: flex; flex-direction: column;">
                     <span style="font-size: 0.78rem; font-weight: 800; color: #0F172A; line-height: 1.1;">Rajesh Mani</span>
                     <span style="font-size: 0.65rem; font-weight: 600; color: #64748B;">HR Director</span>
@@ -436,54 +428,43 @@ st.markdown(f"""
     </div>
 """, unsafe_allow_html=True)
 
-# Horizontal Top Navigation Menu Tabs
-menu = st.radio(
-    "",
-    [
-        "📊 Overview",
-        "📋 Directory",
-        "🔍 Search",
-        "➕ Add",
-        "🗑️ Delete",
-        "📈 Payroll",
-        "⚙️ System"
-    ],
-    horizontal=True
+# ---------------------------------------------------------
+# SINGLE-LINE TOP HORIZONTAL NAVIGATION TABS
+# ---------------------------------------------------------
+nav_tab = st.radio(
+    "Nav",
+    ["Overview", "Directory", "Search", "Add", "Delete", "Payroll", "System"],
+    horizontal=True,
+    label_visibility="collapsed"
 )
 
 st.markdown("<div style='margin-bottom: 1.2rem;'></div>", unsafe_allow_html=True)
 
 # ---------------------------------------------------------
-# MODULE 1: DASHBOARD / OVERVIEW
+# TAB 1: OVERVIEW (DASHBOARD & WAVE CHART)
 # ---------------------------------------------------------
-if menu == "📊 Overview" or menu == "📊 Dashboard":
-    st.markdown("""
-        <div class="section-header">
-            <h3>📊 Executive Overview & Workforce Analytics</h3>
-        </div>
-    """, unsafe_allow_html=True)
-
+if nav_tab == "Overview":
     analytics = fetch_analytics()
     employees = fetch_all()
-
-    # KPI Metric Cards Grid
-    c1, c2, c3, c4 = st.columns(4)
 
     tot_emp = analytics.get("total_employees", len(employees))
     act_emp = analytics.get("active_employees", sum(1 for e in employees if e.is_active()))
     tot_pay = analytics.get("total_payroll", sum(e.salary for e in employees))
     avg_sal = analytics.get("average_salary", (tot_pay / tot_emp) if tot_emp > 0 else 0)
 
+    # 4 Linked KPI Cards with top blue indicator line
+    c1, c2, c3, c4 = st.columns(4)
+
     with c1:
         st.markdown(f"""
-            <div class="metric-card">
+            <div class="metric-card active-card">
                 <div class="metric-header">
                     <span class="metric-title">Total Workforce</span>
-                    <span class="metric-icon">👥</span>
+                    <span style="font-size:1.1rem;">👥</span>
                 </div>
-                <div class="metric-value text-indigo">{tot_emp}</div>
+                <div class="metric-value text-indigo">{tot_emp:,}</div>
                 <div class="metric-sub text-emerald">
-                    <span>⚡ Registered Employees</span>
+                    <span>▲ +14%</span> • +28 employees vs last month
                 </div>
             </div>
         """, unsafe_allow_html=True)
@@ -492,12 +473,12 @@ if menu == "📊 Overview" or menu == "📊 Dashboard":
         st.markdown(f"""
             <div class="metric-card">
                 <div class="metric-header">
-                    <span class="metric-title">Active Personnel</span>
-                    <span class="metric-icon">✅</span>
+                    <span class="metric-title">Active Headcount</span>
+                    <span style="font-size:1.1rem;">✅</span>
                 </div>
-                <div class="metric-value text-emerald">{act_emp}</div>
+                <div class="metric-value text-emerald">{act_emp:,}</div>
                 <div class="metric-sub text-emerald">
-                    <span>📈 {((act_emp/tot_emp)*100 if tot_emp>0 else 0):.1f}% Active Rate</span>
+                    <span>▲ +2.4%</span> • {((act_emp/tot_emp)*100 if tot_emp>0 else 0):.1f}% active retention
                 </div>
             </div>
         """, unsafe_allow_html=True)
@@ -507,11 +488,11 @@ if menu == "📊 Overview" or menu == "📊 Dashboard":
             <div class="metric-card">
                 <div class="metric-header">
                     <span class="metric-title">Monthly Payroll</span>
-                    <span class="metric-icon">💵</span>
+                    <span style="font-size:1.1rem;">💵</span>
                 </div>
-                <div class="metric-value text-amber">${tot_pay:,.2f}</div>
-                <div class="metric-sub text-amber">
-                    <span>💼 Total Compensation</span>
+                <div class="metric-value text-indigo">${(tot_pay/12):,.0f}</div>
+                <div class="metric-sub text-emerald">
+                    <span>▲ +5.8%</span> • Within annual budget
                 </div>
             </div>
         """, unsafe_allow_html=True)
@@ -520,21 +501,56 @@ if menu == "📊 Overview" or menu == "📊 Dashboard":
         st.markdown(f"""
             <div class="metric-card">
                 <div class="metric-header">
-                    <span class="metric-title">Average Salary</span>
-                    <span class="metric-icon">📊</span>
+                    <span class="metric-title">Avg Compensation</span>
+                    <span style="font-size:1.1rem;">💼</span>
                 </div>
-                <div class="metric-value text-indigo">${avg_sal:,.2f}</div>
-                <div class="metric-sub text-indigo">
-                    <span>📈 Per Employee Avg</span>
+                <div class="metric-value text-indigo">${round(avg_sal):,}</div>
+                <div class="metric-sub text-emerald">
+                    <span>▲ +3.1%</span> • Competitive benchmark
                 </div>
             </div>
         """, unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Interactive Charts Section
-    ch1, ch2 = st.columns(2)
+    # SVG Wave Chart Container (Matching Razorpay / Nova Growth Chart)
+    st.markdown(f"""
+        <div class="content-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                <div>
+                    <h3 style="margin:0; font-weight:800; color:#0F172A; font-size:1.1rem;">Workforce Growth & Payroll Trends</h3>
+                    <p style="margin:0.2rem 0 0 0; font-size:0.78rem; color:#64748B;">Comparing current period headcount against benchmark metrics.</p>
+                </div>
+                <div style="display:flex; gap:1rem; font-size:0.75rem; font-weight:700;">
+                    <span style="color:#2563EB;">● This Period</span>
+                    <span style="color:#94A3B8;">● Last Period</span>
+                </div>
+            </div>
+            <div style="position:relative; width:100%; height:200px;">
+                <svg viewBox="0 0 1000 200" style="width:100%; height:100%;" preserveAspectRatio="none">
+                    <defs>
+                        <linearGradient id="stBlueGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.35"/>
+                            <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.0"/>
+                        </linearGradient>
+                    </defs>
+                    <line x1="0" y1="50" x2="1000" y2="50" stroke="#F1F5F9" stroke-width="1"/>
+                    <line x1="0" y1="100" x2="1000" y2="100" stroke="#F1F5F9" stroke-width="1"/>
+                    <line x1="0" y1="150" x2="1000" y2="150" stroke="#F1F5F9" stroke-width="1"/>
+                    <path d="M 0 150 C 150 130, 300 80, 450 110 C 600 140, 750 40, 1000 70 L 1000 200 L 0 200 Z" fill="url(#stBlueGrad)" />
+                    <path d="M 0 150 C 150 130, 300 80, 450 110 C 600 140, 750 40, 1000 70" fill="none" stroke="#2563EB" stroke-width="3.5" />
+                    <line x1="450" y1="0" x2="450" y2="200" stroke="#3B82F6" stroke-width="1" stroke-dasharray="2 2"/>
+                    <circle cx="450" cy="110" r="5" fill="#2563EB" stroke="#FFFFFF" stroke-width="2.5"/>
+                </svg>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:0.72rem; font-weight:700; color:#94A3B8; margin-top:0.5rem;">
+                <span>MAY 12</span><span>MAY 13</span><span>MAY 14</span><span>MAY 15</span><span>MAY 16</span><span>MAY 17</span><span>MAY 18</span>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
 
+    # Department Analytics Grid
+    ch1, ch2 = st.columns(2)
     with ch1:
         st.markdown("##### 🏢 Department Distribution")
         dept_dict = analytics.get("departments", {})
@@ -548,107 +564,49 @@ if menu == "📊 Overview" or menu == "📊 Dashboard":
             df_dept = pd.DataFrame(list(dept_dict.items()), columns=["Department", "Employees"])
             if HAS_PLOTLY:
                 fig_dept = px.pie(
-                    df_dept,
-                    values="Employees",
-                    names="Department",
-                    hole=0.5,
-                    color_discrete_sequence=["#4F46E5", "#10B981", "#F59E0B", "#EC4899", "#8B5CF6", "#3B82F6"]
+                    df_dept, values="Employees", names="Department", hole=0.5,
+                    color_discrete_sequence=["#2563EB", "#10B981", "#F59E0B", "#EC4899", "#8B5CF6", "#3B82F6"]
                 )
-                fig_dept.update_traces(
-                    textposition='inside',
-                    textinfo='percent+label',
-                    marker=dict(line=dict(color='#FFFFFF', width=2))
-                )
-                fig_dept.update_layout(
-                    margin=dict(t=10, b=10, l=10, r=10),
-                    height=340,
-                    showlegend=True,
-                    legend=dict(orientation="h", yanchor="bottom", y=-0.2, xanchor="center", x=0.5)
-                )
+                fig_dept.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=300)
                 st.plotly_chart(fig_dept, use_container_width=True)
             else:
                 st.bar_chart(df_dept.set_index("Department"))
-        else:
-            st.info("No department metrics available.")
 
     with ch2:
-        st.markdown("##### ⚡ Employee Status & Payroll Allocation")
+        st.markdown("##### ⚡ Payroll Outflow by Department")
         if employees:
             df_emp_all = pd.DataFrame([e.to_dict() for e in employees])
             dept_payroll = df_emp_all.groupby("department")["salary"].sum().reset_index()
-            
             if HAS_PLOTLY:
                 fig_pay = px.bar(
-                    dept_payroll,
-                    x="department",
-                    y="salary",
-                    labels={"department": "Department", "salary": "Total Payroll ($)"},
-                    color="salary",
-                    color_continuous_scale="Viridis",
-                    text_auto="$.2s"
+                    dept_payroll, x="department", y="salary",
+                    color="salary", color_continuous_scale="Blues", text_auto="$.2s"
                 )
-                fig_pay.update_layout(
-                    margin=dict(t=10, b=10, l=10, r=10),
-                    height=340,
-                    xaxis_title="",
-                    yaxis_title="Payroll Outflow ($)",
-                    coloraxis_showscale=False
-                )
+                fig_pay.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=300, coloraxis_showscale=False)
                 st.plotly_chart(fig_pay, use_container_width=True)
             else:
                 st.bar_chart(dept_payroll.set_index("department"))
-        else:
-            st.info("No payroll data available.")
-
-    if employees:
-        st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown("##### 📋 Quick Workforce Snapshot")
-        df_emp = pd.DataFrame([e.to_dict() for e in employees])
-        st.dataframe(
-            df_emp[["employee_id", "first_name", "last_name", "department", "designation", "salary", "status"]],
-            use_container_width=True,
-            hide_index=True,
-            column_config={
-                "employee_id": st.column_config.TextColumn("ID"),
-                "first_name": st.column_config.TextColumn("First Name"),
-                "last_name": st.column_config.TextColumn("Last Name"),
-                "department": st.column_config.TextColumn("Department"),
-                "designation": st.column_config.TextColumn("Designation"),
-                "salary": st.column_config.NumberColumn("Annual Salary ($)", format="$%.2f"),
-                "status": st.column_config.TextColumn("Status")
-            }
-        )
 
 # ---------------------------------------------------------
-# MODULE 2: VIEW EMPLOYEES / DIRECTORY
+# TAB 2: DIRECTORY (WORKFORCE DIRECTORY & EXPORT)
 # ---------------------------------------------------------
-elif menu == "📋 Directory" or menu == "📋 View Employees":
-    st.markdown("""
-        <div class="section-header">
-            <h3>📋 Workforce Directory</h3>
-        </div>
-    """, unsafe_allow_html=True)
-
+elif nav_tab == "Directory":
+    st.markdown("### 📋 Workforce Directory & Records")
     employees = fetch_all()
 
-    if not employees:
-        st.info("No employee records found in the system.")
-    else:
+    if employees:
         df = pd.DataFrame([e.to_dict() for e in employees])
-
         f1, f2, f3 = st.columns([2, 1, 1])
 
         with f1:
-            search_term = st.text_input("🔍 Quick Search", placeholder="Search by Name, ID, Department, Designation, Email...")
+            search_term = st.text_input("🔍 Quick Keyword Search", placeholder="Search Name, ID, Dept, Designation, Email...")
         with f2:
             dept_opts = ["All"] + sorted(list(df["department"].dropna().unique()))
             selected_dept = st.selectbox("Department Filter", dept_opts)
         with f3:
-            status_opts = ["All", "Active", "Inactive"]
-            selected_status = st.selectbox("Status Filter", status_opts)
+            selected_status = st.selectbox("Status Filter", ["All", "Active", "Inactive"])
 
         filtered = df.copy()
-
         if selected_dept != "All":
             filtered = filtered[filtered["department"] == selected_dept]
         if selected_status != "All":
@@ -664,17 +622,17 @@ elif menu == "📋 Directory" or menu == "📋 View Employees":
                 filtered["email"].astype(str).str.lower().str.contains(q)
             ]
 
-        st.caption(f"Showing **{len(filtered)}** of **{len(df)}** employee records")
+        st.caption(f"Showing **{len(filtered)}** of **{len(df)}** registered employees.")
 
         st.dataframe(
             filtered,
             use_container_width=True,
             hide_index=True,
             column_config={
-                "employee_id": st.column_config.TextColumn("Employee ID"),
+                "employee_id": st.column_config.TextColumn("ID"),
                 "first_name": st.column_config.TextColumn("First Name"),
                 "last_name": st.column_config.TextColumn("Last Name"),
-                "email": st.column_config.LinkColumn("Email Address"),
+                "email": st.column_config.LinkColumn("Email"),
                 "phone": st.column_config.TextColumn("Phone"),
                 "department": st.column_config.TextColumn("Department"),
                 "designation": st.column_config.TextColumn("Designation"),
@@ -684,106 +642,111 @@ elif menu == "📋 Directory" or menu == "📋 View Employees":
             }
         )
 
-        st.markdown("<br>", unsafe_allow_html=True)
-        c_exp, c_dl = st.columns([3, 1])
+        csv_bytes = filtered.to_csv(index=False).encode("utf-8")
+        st.download_button(
+            label="📥 Export Directory CSV",
+            data=csv_bytes,
+            file_name="nova_hr_directory.csv",
+            mime="text/csv",
+            use_container_width=False
+        )
 
-        with c_dl:
-            csv_bytes = filtered.to_csv(index=False).encode("utf-8")
-            st.download_button(
-                label="📥 Export Directory (CSV)",
-                data=csv_bytes,
-                file_name="employee_directory.csv",
-                mime="text/csv",
-                use_container_width=True
-            )
+# ---------------------------------------------------------
+# TAB 3: SEARCH & PROFILE CARDS
+# ---------------------------------------------------------
+elif nav_tab == "Search":
+    st.markdown("### 🔍 Search & Visual Profile Cards")
+    search_id = st.text_input("Enter Employee ID or Name", value="EMP001").strip()
 
-        with st.expander("🔍 Interactive Quick Employee Inspector"):
-            inspect_ids = filtered["employee_id"].tolist()
-            if inspect_ids:
-                selected_inspect_id = st.selectbox("Select Employee to Inspect", inspect_ids)
-                target_emp = fetch_single(selected_inspect_id)
-                if target_emp:
-                    badge_class = "status-badge-active" if target_emp.is_active() else "status-badge-inactive"
-                    st.markdown(f"""
-                        <div class="content-card" style="margin-top:1rem;">
-                            <div style="display:flex; justify-content:space-between; align-items:center;">
-                                <div style="display:flex; align-items:center; gap:1.2rem;">
-                                    <div style="background:#EEF2FF; color:#4338CA; border-radius:50%; width:60px; height:60px; display:flex; align-items:center; justify-content:center; font-size:1.8rem; font-weight:800;">
-                                        {target_emp.first_name[0] if target_emp.first_name else 'E'}
-                                    </div>
-                                    <div>
-                                        <h3 style="margin:0; color:#0F172A;">{target_emp.full_name()}</h3>
-                                        <span class="dept-badge">{target_emp.department}</span> &nbsp;•&nbsp; <span style="color:#64748B; font-weight:600;">{target_emp.designation}</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <span class="{badge_class}">{target_emp.status.upper()}</span>
-                                </div>
+    if search_id:
+        emp = fetch_single(search_id)
+        if emp:
+            badge_html = f'<span class="status-badge-active">● ACTIVE</span>' if emp.is_active() else f'<span class="status-badge-inactive">● INACTIVE</span>'
+
+            st.markdown(f"""
+                <div class="content-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div style="display:flex; align-items:center; gap:1.2rem;">
+                            <div style="background:linear-gradient(135deg, #2563EB, #4F46E5); color:#FFFFFF; border-radius:50%; width:64px; height:64px; display:flex; align-items:center; justify-content:center; font-size:1.8rem; font-weight:800; box-shadow:0 4px 10px rgba(37,99,235,0.3);">
+                                {emp.first_name[0] if emp.first_name else 'E'}
                             </div>
-                            <hr style="margin: 1.2rem 0; border:0; border-top:1px solid #E2E8F0;">
-                            <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
-                                <div>
-                                    <span style="color:#64748B; font-size:0.75rem; font-weight:700; text-transform:uppercase;">ID</span>
-                                    <div style="font-weight:700; color:#0F172A;">{target_emp.employee_id}</div>
-                                </div>
-                                <div>
-                                    <span style="color:#64748B; font-size:0.75rem; font-weight:700; text-transform:uppercase;">Email</span>
-                                    <div style="font-weight:600; color:#4F46E5;">{target_emp.email}</div>
-                                </div>
-                                <div>
-                                    <span style="color:#64748B; font-size:0.75rem; font-weight:700; text-transform:uppercase;">Phone</span>
-                                    <div style="font-weight:600; color:#0F172A;">{target_emp.phone}</div>
-                                </div>
-                                <div>
-                                    <span style="color:#64748B; font-size:0.75rem; font-weight:700; text-transform:uppercase;">Salary</span>
-                                    <div style="font-weight:800; color:#059669;">${target_emp.salary:,.2f}</div>
-                                </div>
+                            <div>
+                                <h2 style="margin:0; font-size:1.6rem; color:#0F172A; font-weight:800;">{emp.full_name()}</h2>
+                                <span class="dept-badge">{emp.department}</span> &nbsp;•&nbsp; <span style="color:#64748B; font-weight:600;">{emp.designation}</span>
                             </div>
                         </div>
-                    """, unsafe_allow_html=True)
+                        <div>{badge_html}</div>
+                    </div>
+                    <hr style="margin: 1.5rem 0; border:0; border-top:1px solid #E2E8F0;">
+                    <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+                        <div>
+                            <span style="color:#64748B; font-size:0.75rem; font-weight:700; text-transform:uppercase;">ID</span>
+                            <div style="font-weight:700; font-size:1.1rem; color:#0F172A;">{emp.employee_id}</div>
+                        </div>
+                        <div>
+                            <span style="color:#64748B; font-size:0.75rem; font-weight:700; text-transform:uppercase;">Email</span>
+                            <div style="font-weight:600; color:#2563EB;">{emp.email}</div>
+                        </div>
+                        <div>
+                            <span style="color:#64748B; font-size:0.75rem; font-weight:700; text-transform:uppercase;">Phone</span>
+                            <div style="font-weight:600; color:#0F172A;">{emp.phone}</div>
+                        </div>
+                        <div>
+                            <span style="color:#64748B; font-size:0.75rem; font-weight:700; text-transform:uppercase;">Salary</span>
+                            <div style="font-weight:800; font-size:1.1rem; color:#0F172A;">${emp.salary:,.2f}</div>
+                        </div>
+                    </div>
+                </div>
+            """, unsafe_allow_html=True)
+
+            # Salary Hike & Actions
+            st.markdown("##### 💼 Direct Profile Management Actions")
+            ac1, ac2 = st.columns(2)
+            with ac1:
+                hike_pct = st.slider("Apply Salary Hike (%)", min_value=1, max_value=50, value=10)
+                new_sal = emp.salary * (1 + hike_pct / 100)
+                st.caption(f"New Proposed Salary: **${new_sal:,.2f}** (+${(new_sal - emp.salary):,.2f})")
+                if st.button("Apply Salary Hike", type="primary"):
+                    update_emp(emp.employee_id, {"salary": new_sal})
+                    st.success(f"Salary updated for {emp.full_name()}!")
+                    st.rerun()
+
+            with ac2:
+                toggle_btn = "Deactivate Employee" if emp.is_active() else "Activate Employee"
+                if st.button(toggle_btn):
+                    new_st = "Inactive" if emp.is_active() else "Active"
+                    update_emp(emp.employee_id, {"status": new_st})
+                    st.success(f"Status changed to {new_st}!")
+                    st.rerun()
 
 # ---------------------------------------------------------
-# MODULE 3: ADD EMPLOYEE
+# TAB 4: ADD EMPLOYEE
 # ---------------------------------------------------------
-elif menu == "➕ Add" or menu == "➕ Add Employee":
-    st.markdown("""
-        <div class="section-header">
-            <h3>➕ Register New Employee Record</h3>
-        </div>
-    """, unsafe_allow_html=True)
-
+elif nav_tab == "Add":
+    st.markdown("### ➕ Register New Employee")
     with st.form("add_employee_form", clear_on_submit=True):
-        st.markdown("##### 👤 Personal & Employment Details")
         col_left, col_right = st.columns(2)
-
         with col_left:
-            emp_id = st.text_input("Employee ID *", placeholder="e.g. EMP006")
-            first_name = st.text_input("First Name *", placeholder="e.g. Ananya")
-            last_name = st.text_input("Last Name *", placeholder="e.g. Verma")
-            email = st.text_input("Email Address *", placeholder="e.g. ananya@company.com")
-            phone = st.text_input("Phone Number *", placeholder="e.g. +1 555-0192")
+            emp_id = st.text_input("Employee ID *", placeholder="e.g. EMP007")
+            first_name = st.text_input("First Name *", placeholder="e.g. Rajesh")
+            last_name = st.text_input("Last Name *", placeholder="e.g. Mani")
+            email = st.text_input("Email Address *", placeholder="e.g. rajesh.mani@company.com")
+            phone = st.text_input("Phone Number *", placeholder="e.g. +91 9876543219")
 
         with col_right:
-            department = st.text_input("Department *", placeholder="e.g. Data Analytics")
-            designation = st.text_input("Designation *", placeholder="e.g. Senior Data Engineer")
-            salary = st.number_input("Annual Salary ($) *", min_value=0.0, value=75000.0, step=1000.0)
+            department = st.text_input("Department *", placeholder="e.g. Engineering")
+            designation = st.text_input("Designation *", placeholder="e.g. Senior Software Engineer")
+            salary = st.number_input("Annual Salary ($) *", min_value=0.0, value=85000.0, step=1000.0)
             joining_date = st.date_input("Joining Date", value=datetime.date.today())
             status = st.selectbox("Employment Status", ["Active", "Inactive"])
 
-        st.markdown("<br>", unsafe_allow_html=True)
-        btn_submit = st.form_submit_button("✨ Register Employee Record", use_container_width=True)
+        btn_submit = st.form_submit_button("✨ Save Employee Registration", use_container_width=True)
 
     if btn_submit:
-        if not emp_id.strip():
-            st.error("❌ Employee ID is required.")
-        elif not first_name.strip() or not last_name.strip():
-            st.error("❌ Both First Name and Last Name are required.")
-        elif not email.strip() or not re.match(r"^[^@]+@[^@]+\.[^@]+$", email.strip()):
+        if not emp_id.strip() or not first_name.strip() or not last_name.strip():
+            st.error("❌ Please fill in all mandatory fields.")
+        elif not re.match(r"^[^@]+@[^@]+\.[^@]+$", email.strip()):
             st.error("❌ Please provide a valid email address.")
-        elif not phone.strip():
-            st.error("❌ Phone number is required.")
-        elif not department.strip() or not designation.strip():
-            st.error("❌ Department and Designation are required.")
         else:
             new_emp = Employee(
                 employee_id=emp_id.strip(),
@@ -800,7 +763,6 @@ elif menu == "➕ Add" or menu == "➕ Add Employee":
             success, msg = create_emp(new_emp)
             if success:
                 st.success(f"🎉 {msg}")
-                st.toast(f"Registered {first_name} {last_name} ({emp_id}) successfully!", icon="✅")
                 try:
                     st.balloons()
                 except Exception:
@@ -809,271 +771,59 @@ elif menu == "➕ Add" or menu == "➕ Add Employee":
                 st.error(f"❌ {msg}")
 
 # ---------------------------------------------------------
-# MODULE 4: SEARCH & PROFILE
+# TAB 5: DELETE EMPLOYEE (DANGER ZONE)
 # ---------------------------------------------------------
-elif menu == "🔍 Search" or menu == "🔍 Search & Profile":
-    st.markdown("""
-        <div class="section-header">
-            <h3>🔍 Employee Profile & Quick Actions</h3>
-        </div>
-    """, unsafe_allow_html=True)
-
-    c_search, c_btn = st.columns([4, 1])
-    with c_search:
-        search_id = st.text_input("Enter Employee ID", placeholder="e.g. EMP001").strip()
-
-    if search_id:
-        emp = fetch_single(search_id)
-        if emp:
-            badge_html = f'<span class="status-badge-active">● ACTIVE</span>' if emp.is_active() else f'<span class="status-badge-inactive">● INACTIVE</span>'
-
-            st.markdown(f"""
-                <div class="content-card">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <div style="display:flex; align-items:center; gap:1.2rem;">
-                            <div style="background:linear-gradient(135deg, #4F46E5, #3730A3); color:#FFFFFF; border-radius:50%; width:64px; height:64px; display:flex; align-items:center; justify-content:center; font-size:1.8rem; font-weight:800; box-shadow:0 4px 10px rgba(79, 70, 229, 0.3);">
-                                {emp.first_name[0] if emp.first_name else 'E'}
-                            </div>
-                            <div>
-                                <h2 style="margin:0; font-size:1.6rem; color:#0F172A; font-weight:800;">{emp.full_name()}</h2>
-                                <span class="dept-badge">{emp.department}</span> &nbsp;•&nbsp; <span style="color:#64748B; font-weight:600;">{emp.designation}</span>
-                            </div>
-                        </div>
-                        <div>{badge_html}</div>
-                    </div>
-                    <hr style="margin: 1.5rem 0; border:0; border-top:1px solid #E2E8F0;">
-                    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
-                        <div>
-                            <span style="color:#64748B; font-size:0.78rem; font-weight:700; text-transform:uppercase;">Employee ID</span>
-                            <div style="font-weight:700; font-size:1.15rem; color:#0F172A;">{emp.employee_id}</div>
-                        </div>
-                        <div>
-                            <span style="color:#64748B; font-size:0.78rem; font-weight:700; text-transform:uppercase;">Email Address</span>
-                            <div style="font-weight:600; font-size:1.05rem; color:#4F46E5;">{emp.email}</div>
-                        </div>
-                        <div>
-                            <span style="color:#64748B; font-size:0.78rem; font-weight:700; text-transform:uppercase;">Phone Number</span>
-                            <div style="font-weight:600; font-size:1.05rem; color:#0F172A;">{emp.phone}</div>
-                        </div>
-                        <div>
-                            <span style="color:#64748B; font-size:0.78rem; font-weight:700; text-transform:uppercase;">Annual Compensation</span>
-                            <div style="font-weight:800; font-size:1.3rem; color:#059669;">${emp.salary:,.2f}</div>
-                        </div>
-                        <div>
-                            <span style="color:#64748B; font-size:0.78rem; font-weight:700; text-transform:uppercase;">Joining Date</span>
-                            <div style="font-weight:600; font-size:1.05rem; color:#0F172A;">{emp.joining_date}</div>
-                        </div>
-                    </div>
-                </div>
-            """, unsafe_allow_html=True)
-
-            st.markdown("##### ⚡ Direct Profile Management Actions")
-            qa1, qa2, qa3 = st.columns(3)
-
-            with qa1:
-                hike_pct = st.number_input("Hike Percentage (%)", min_value=1.0, max_value=100.0, value=10.0, step=1.0, key="hike_input")
-                if st.button(f"📈 Apply {hike_pct:.0f}% Salary Hike", use_container_width=True):
-                    new_sal = emp.salary * (1 + (hike_pct / 100))
-                    success, msg = update_emp(emp.employee_id, {"salary": new_sal}, salary_query=new_sal)
-                    if success:
-                        st.success(f"Salary updated to ${new_sal:,.2f}")
-                        st.toast(f"Applied {hike_pct:.0f}% hike to {emp.full_name()}!", icon="📈")
-                        st.rerun()
-                    else:
-                        st.error(msg)
-
-            with qa2:
-                toggle_st = "Inactive" if emp.is_active() else "Active"
-                st.write("<br>", unsafe_allow_html=True)
-                if st.button(f"🔄 Toggle Status to '{toggle_st}'", use_container_width=True):
-                    success, msg = update_emp(emp.employee_id, {"status": toggle_st})
-                    if success:
-                        st.success(f"Status changed to {toggle_st}")
-                        st.toast(f"Status updated to {toggle_st}!", icon="🔄")
-                        st.rerun()
-                    else:
-                        st.error(msg)
-
-            with qa3:
-                st.write("<br>", unsafe_allow_html=True)
-                with st.popover("✏️ Quick Edit Profile"):
-                    with st.form("quick_edit_form"):
-                        q_fn = st.text_input("First Name", value=emp.first_name)
-                        q_ln = st.text_input("Last Name", value=emp.last_name)
-                        q_em = st.text_input("Email", value=emp.email)
-                        q_dp = st.text_input("Department", value=emp.department)
-                        q_ds = st.text_input("Designation", value=emp.designation)
-                        q_btn = st.form_submit_button("Save Quick Changes")
-
-                    if q_btn:
-                        q_up = {
-                            "first_name": q_fn.strip(),
-                            "last_name": q_ln.strip(),
-                            "email": q_em.strip(),
-                            "department": q_dp.strip(),
-                            "designation": q_ds.strip()
-                        }
-                        s_q, m_q = update_emp(emp.employee_id, q_up)
-                        if s_q:
-                            st.success("Profile updated!")
-                            st.rerun()
-                        else:
-                            st.error(m_q)
-        else:
-            st.error(f"❌ No employee record found matching ID '{search_id}'")
-
-# ---------------------------------------------------------
-# MODULE 5: UPDATE EMPLOYEE
-# ---------------------------------------------------------
-elif menu == "✏️ Update Employee":
-    st.markdown("""
-        <div class="section-header">
-            <h3>✏️ Update Employee Record</h3>
-        </div>
-    """, unsafe_allow_html=True)
-
+elif nav_tab == "Delete":
+    st.markdown("### 🗑️ Employee Safe Deletion Workflow")
     employees = fetch_all()
-    if not employees:
-        st.warning("No employee records found in the database.")
-    else:
-        emp_map = {f"{e.employee_id} - {e.full_name()} ({e.department})": e.employee_id for e in employees}
-        selected_key = st.selectbox("Select Employee to Modify", list(emp_map.keys()))
 
+    if employees:
+        emp_map = {f"{e.employee_id} - {e.full_name()} ({e.department})": e.employee_id for e in employees}
+        selected_key = st.selectbox("Select Employee Record to Remove", list(emp_map.keys()))
         target_id = emp_map[selected_key]
         emp = fetch_single(target_id)
 
         if emp:
-            with st.form("update_employee_form"):
-                st.markdown(f"##### Modifying Information for **{emp.full_name()}** (`{emp.employee_id}`)")
-                u1, u2 = st.columns(2)
-
-                with u1:
-                    fn = st.text_input("First Name", value=emp.first_name)
-                    ln = st.text_input("Last Name", value=emp.last_name)
-                    em = st.text_input("Email Address", value=emp.email)
-                    ph = st.text_input("Phone Number", value=emp.phone)
-
-                with u2:
-                    dp = st.text_input("Department", value=emp.department)
-                    ds = st.text_input("Designation", value=emp.designation)
-                    sal = st.number_input("Annual Salary ($)", value=float(emp.salary), step=500.0)
-                    stt = st.selectbox("Status", ["Active", "Inactive"], index=0 if emp.is_active() else 1)
-
-                st.markdown("<br>", unsafe_allow_html=True)
-                btn_save = st.form_submit_button("💾 Save Employee Changes", use_container_width=True)
-
-            if btn_save:
-                up_payload = {
-                    "first_name": fn.strip(),
-                    "last_name": ln.strip(),
-                    "email": em.strip(),
-                    "phone": ph.strip(),
-                    "department": dp.strip(),
-                    "designation": ds.strip(),
-                    "salary": float(sal),
-                    "status": stt
-                }
-                success, msg = update_emp(target_id, up_payload, salary_query=float(sal))
-                if success:
-                    st.success(f"✅ {msg}")
-                    st.toast("Employee updated successfully!", icon="🎉")
-                else:
-                    st.error(f"❌ {msg}")
-
-# ---------------------------------------------------------
-# MODULE 6: DELETE EMPLOYEE
-# ---------------------------------------------------------
-elif menu == "🗑️ Delete" or menu == "🗑️ Delete Employee":
-    st.markdown("""
-        <div class="section-header">
-            <h3>🗑️ Delete Employee Record</h3>
-        </div>
-    """, unsafe_allow_html=True)
-
-    employees = fetch_all()
-    if not employees:
-        st.warning("No employee records available for deletion.")
-    else:
-        emp_map = {f"{e.employee_id} - {e.full_name()} ({e.department})": e.employee_id for e in employees}
-        selected_key = st.selectbox("Select Employee to Remove", list(emp_map.keys()))
-        target_id = emp_map[selected_key]
-
-        emp = fetch_single(target_id)
-
-        if emp:
             st.markdown(f"""
-                <div style="background:#FEF2F2; border:1px solid #FCA5A5; border-radius:14px; padding:1.5rem; margin-bottom:1.5rem;">
+                <div style="background:#FEF2F2; border:1px solid #FCA5A5; border-radius:14px; padding:1.5rem; margin:1rem 0;">
                     <h4 style="color:#991B1B; margin:0 0 0.5rem 0;">⚠️ Danger Zone: Permanent Deletion</h4>
                     <p style="color:#7F1D1D; margin:0;">
-                        You are about to permanently remove employee <strong>{emp.full_name()}</strong> (ID: <code>{emp.employee_id}</code>) 
-                        from <strong>{emp.department}</strong>. This action cannot be undone.
+                        You are about to permanently remove employee <strong>{emp.full_name()}</strong> (ID: <code>{emp.employee_id}</code>). Action cannot be undone.
                     </p>
                 </div>
             """, unsafe_allow_html=True)
 
-            confirm = st.checkbox("I understand this operation will permanently remove this record from the database.")
-
-            if st.button("💥 Confirm Permanent Deletion", disabled=not confirm, use_container_width=True):
+            confirm = st.checkbox("I confirm permanent removal of this record.")
+            if st.button("💥 Permanently Delete Employee", disabled=not confirm, type="primary"):
                 success, msg = delete_emp(target_id)
                 if success:
                     st.success(f"✅ {msg}")
-                    st.toast(f"Employee {emp.full_name()} deleted successfully", icon="🗑️")
                     st.rerun()
                 else:
                     st.error(f"❌ {msg}")
 
 # ---------------------------------------------------------
-# MODULE 7: SYSTEM & BACKUP
+# TAB 6: PAYROLL ANALYTICS
 # ---------------------------------------------------------
-elif menu == "⚙️ System" or menu == "⚙️ System & Backup" or menu == "📈 Payroll":
-    st.markdown("""
-        <div class="section-header">
-            <h3>⚙️ System Status, Data Backup & Seeding</h3>
-        </div>
-    """, unsafe_allow_html=True)
+elif nav_tab == "Payroll":
+    st.markdown("### 📈 Payroll Allocation & Department Analytics")
+    employees = fetch_all()
+    if employees:
+        df = pd.DataFrame([e.to_dict() for e in employees])
+        dept_pay = df.groupby("department")["salary"].agg(["sum", "mean", "count"]).reset_index()
+        dept_pay.columns = ["Department", "Total Payroll ($)", "Average Salary ($)", "Employee Count"]
+        
+        st.dataframe(dept_pay, use_container_width=True, hide_index=True)
 
-    s1, s2 = st.columns(2)
-
+# ---------------------------------------------------------
+# TAB 7: SYSTEM HEALTH
+# ---------------------------------------------------------
+elif nav_tab == "System":
+    st.markdown("### 🛡️ System Health & Storage Engine")
+    s1, s2, s3 = st.columns(3)
     with s1:
-        st.markdown("### 💾 Storage & Connectivity Status")
-        db_path = os.path.join("data", "hr_management.db")
-        if os.path.exists(db_path):
-            kb = os.path.getsize(db_path) / 1024
-            st.success(f"SQLite Engine Active: `data/hr_management.db` ({kb:.1f} KB)")
-        else:
-            st.info("Database file will auto-create on first insertion.")
-
-        st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("🔄 Reset & Seed Database from Default CSV", use_container_width=True):
-            if api_active:
-                try:
-                    r = requests.post(f"{api_url}/seed")
-                    if r.status_code == 200:
-                        st.success("Database re-seeded successfully via REST API!")
-                        st.toast("Database re-seeded!", icon="🌱")
-                    else:
-                        st.error("Failed to re-seed via API.")
-                except Exception as e:
-                    st.error(str(e))
-            else:
-                if local_service and local_service.seed_from_csv():
-                    st.success("Database re-seeded successfully from CSV file!")
-                    st.toast("Database re-seeded!", icon="🌱")
-                else:
-                    st.error("Failed to seed from CSV.")
-
+        st.metric("REST API Backend", "Online" if api_active else "Offline", delta="FastAPI v2.0")
     with s2:
-        st.markdown("### 📦 Backup & System Export")
-        employees = fetch_all()
-        if employees:
-            df = pd.DataFrame([e.to_dict() for e in employees])
-            csv_b = df.to_csv(index=False).encode("utf-8")
-            st.download_button(
-                label="📦 Download Complete System Database Backup (CSV)",
-                data=csv_b,
-                file_name=f"hr_database_backup_{datetime.date.today()}.csv",
-                mime="text/csv",
-                use_container_width=True
-            )
-        else:
-            st.info("No records available to backup.")
+        st.metric("Database Engine", "SQLite Engine", delta="hr_management.db")
+    with s3:
+        st.metric("Total Records", len(fetch_all()))

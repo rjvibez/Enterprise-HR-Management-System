@@ -262,8 +262,8 @@ st.sidebar.markdown("""
                 🏢
             </div>
             <div>
-                <div style="font-size: 1.25rem; font-weight: 800; color: #FFFFFF; letter-spacing: -0.4px;">Enterprise HR</div>
-                <div style="font-size: 0.78rem; color: #94A3B8; font-weight: 500;">Workforce Intelligence v2.5</div>
+                <div style="font-size: 1.25rem; font-weight: 800; color: #FFFFFF; letter-spacing: -0.4px;">Nova HR</div>
+                <div style="font-size: 0.78rem; color: #94A3B8; font-weight: 500;">Enterprise Management System</div>
             </div>
         </div>
     </div>
@@ -404,7 +404,7 @@ def delete_emp(emp_id):
 st.markdown("""
     <div class="hero-banner">
         <div class="hero-title-group">
-            <h1>Enterprise HR Management System</h1>
+            <h1>Nova HR Enterprise Management System</h1>
             <p>Executive workforce directory, real-time analytics & automated record management</p>
         </div>
     </div>

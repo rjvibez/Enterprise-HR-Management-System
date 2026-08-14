@@ -1,12 +1,12 @@
-# 🏢 Enterprise HR Management System
+# 🏢 Nova HR | Enterprise Management System
 
 ![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
-![Next.js](https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=for-the-badge&logo=next.js&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
 
-An end-to-end, executive-grade **Human Resource Management System** built with **Python**, **FastAPI**, **Streamlit**, **Next.js**, **SQLite/MySQL**, and **Plotly**. 
+An end-to-end, executive-grade **Nova HR Enterprise Management System** built with **Python**, **FastAPI**, **Streamlit**, **Next.js 16**, **SQLite/MySQL**, and **Tailwind CSS**. 
 
 Features an executive web portal, real-time workforce analytics, full CRUD employee management (Add, View, Search, Update, Delete), automated CSV seeding, REST API backend, and one-click cloud deployment readiness for **Streamlit Cloud**.
 
@@ -16,12 +16,12 @@ Features an executive web portal, real-time workforce analytics, full CRUD emplo
 
 ## 🌟 Key Features
 
-* 📊 **Executive Dashboard & Workforce Analytics**: Real-time KPI metric cards (Total Workforce, Active Personnel, Monthly Payroll, Avg Salary), interactive department donut charts, and payroll allocation charts.
-* 📋 **Workforce Directory & Quick Inspector**: Live search by keyword (Name, ID, Department, Designation, Email), department/status filters, formatted currency columns, inline quick inspector, and single-click CSV export.
-* ➕ **Employee Registration**: Form input validation (Email regex check, phone validation, mandatory fields) with interactive success banners and balloons.
-* 🔍 **Search & Employee Profile Cards**: Visual profile cards with direct management actions (**% Salary Hike Calculator** and **Status Toggle**).
+* 📊 **Executive Dashboard & Workforce Analytics**: Real-time KPI metric cards (Total Workforce, Active Personnel, Monthly Payroll, Avg Salary), interactive SVG wave curve chart, and department distribution breakdown.
+* 📋 **Workforce Directory & Quick Inspector**: Live search by keyword (Name, ID, Department, Designation, Email), department/status filter pills, formatted currency columns, inline Quick Inspector drawer, and single-click CSV export.
+* 🔍 **Search & Visual Profile Cards**: Visual profile cards with direct management actions (**Status Toggle Active/Inactive** & **% Salary Hike Calculator**).
+* ➕ **Employee Registration**: Form input validation (Email regex check, phone validation, mandatory fields) with interactive success banners.
 * ✏️ **Employee Record Editor**: Edit any employee's details (Name, Email, Phone, Department, Designation, Salary, Status).
-* 🗑️ **Safe Deletion Workflow**: Danger zone warning banner and safety confirmation checkbox before permanent record removal.
+* 🗑️ **Safe Deletion Workflow**: Danger zone warning banner, explicit table delete buttons, profile drawer delete button, and safety confirmation dialogs.
 * 💾 **Dual Storage Persistence**: Zero-configuration SQLite engine (`data/hr_management.db`) with auto CSV seeding, and support for MySQL.
 * ⚡ **Dual App Engines**: Run via **Streamlit UI** (`http://localhost:8501`) or **Next.js Frontend** (`http://localhost:3000`).
 
@@ -38,8 +38,9 @@ Enterprise-HR-Management-System/
 │
 ├── frontend/               # Next.js Web Frontend App
 │   ├── app/
-│   │   ├── page.tsx        # Next.js Full CRUD Executive Web Portal
-│   │   └── layout.tsx      # App Layout & Tailwind Configuration
+│   │   ├── page.tsx        # Next.js Full CRUD Executive Web Portal (Single-line Nav Menu)
+│   │   ├── layout.tsx      # Plus Jakarta Sans Font & Metadata Setup
+│   │   └── globals.css     # Enterprise Design System Tokens
 │   └── package.json
 │
 ├── models/
@@ -140,13 +141,25 @@ npm run dev
 
 ---
 
+## 📤 Push Changes to GitHub
+
+To commit and push all recent updates to GitHub:
+
+```bash
+git add .
+git commit -m "Upgrade Nova HR Enterprise Management System with executive UI, single-line navigation, and explicit feature tabs"
+git push origin main
+```
+
+---
+
 ## ☁️ Deploying to Streamlit Cloud
 
 1. Push your repository to **GitHub**:
    ```bash
    git add .
-   git commit -m "Upgrade Enterprise HR System with executive UI and Next.js frontend"
-   git push origin main --force
+   git commit -m "Deploy Nova HR Enterprise Management System"
+   git push origin main
    ```
 2. Go to **[share.streamlit.io](https://share.streamlit.io)**.
 3. Click **"New App"** and select repository: `Enterprise-HR-Management-System`.
@@ -157,6 +170,6 @@ npm run dev
 
 ## 👤 Author
 
-**Rajesh**  
-AI Engineer | Python Developer | Machine Learning Specialist  
+**Rajesh Mani**  
+HR Director | AI Engineer | Python Developer | Machine Learning Specialist  
 GitHub: [@rjvibez](https://github.com/rjvibez)

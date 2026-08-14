@@ -4,7 +4,7 @@ import streamlit as st
 # PAGE CONFIGURATION - MUST BE FIRST STREAMLIT CALL
 # ---------------------------------------------------------
 st.set_page_config(
-    page_title="Enterprise HR Portal",
+    page_title="Nova HR Enterprise Management System",
     page_icon="🏢",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -35,7 +35,7 @@ except Exception as e:
     SERVICE_ERROR = str(e)
 
 # ---------------------------------------------------------
-# MODERN CUSTOM CSS STYLING & DESIGN SYSTEM
+# MODERN CUSTOM CSS STYLING & RAZORPAY DESIGN SYSTEM
 # ---------------------------------------------------------
 st.markdown("""
     <style>
@@ -45,68 +45,71 @@ st.markdown("""
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
-    /* Remove excessive top container padding */
-    .main .block-container {
-        padding-top: 1.5rem;
-        padding-bottom: 3rem;
-        max-width: 96%;
+    .stApp {
+        background-color: #F8FAFC;
     }
 
-    /* Executive Hero Banner */
-    .hero-banner {
-        background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 45%, #312E81 100%);
-        padding: 2.2rem 2.8rem;
-        border-radius: 20px;
-        color: #FFFFFF;
-        margin-bottom: 2rem;
-        box-shadow: 0 12px 30px -5px rgba(30, 27, 75, 0.4);
-        border: 1px solid rgba(255, 255, 255, 0.12);
+    /* Remove excessive top container padding */
+    .main .block-container {
+        padding-top: 1rem;
+        padding-bottom: 3rem;
+        max-width: 95%;
+    }
+
+    /* Razorpay Top Header Bar */
+    .rz-header {
+        background: #FFFFFF;
+        border-bottom: 1px solid #E2E8F0;
+        padding: 0.9rem 1.8rem;
+        margin: -1rem -1rem 1.5rem -1rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        position: relative;
-        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
     }
-    .hero-banner::before {
-        content: "";
-        position: absolute;
-        top: -50%;
-        right: -10%;
-        width: 300px;
-        height: 300px;
-        background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, rgba(0,0,0,0) 70%);
-        border-radius: 50%;
-        pointer-events: none;
-    }
-    .hero-title-group h1 {
-        margin: 0;
-        font-size: 2.4rem;
+    .rz-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
         font-weight: 800;
-        letter-spacing: -0.7px;
-        color: #F8FAFC;
-        line-height: 1.2;
+        font-size: 1.25rem;
+        color: #0F172A;
     }
-    .hero-title-group p {
-        margin: 0.6rem 0 0 0;
-        color: #C7D2FE;
-        font-size: 1.05rem;
-        font-weight: 400;
+    .rz-badge {
+        background-color: #EFF6FF;
+        color: #1E40AF;
+        border: 1px solid #BFDBFE;
+        padding: 0.25rem 0.65rem;
+        border-radius: 9999px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.3px;
     }
 
-    /* Metric Cards */
+    /* Razorpay Metric Tab Cards */
     .metric-card {
         background: #FFFFFF;
-        border-radius: 16px;
-        padding: 1.5rem;
+        border-radius: 12px;
+        padding: 1.25rem;
         border: 1px solid #E2E8F0;
-        box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.04), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 8px -2px rgba(15, 23, 42, 0.04);
+        transition: all 0.2s ease-in-out;
         position: relative;
     }
     .metric-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 14px 24px -4px rgba(15, 23, 42, 0.08);
-        border-color: #CBD5E1;
+        border-color: #3B82F6;
+        box-shadow: 0 4px 16px -2px rgba(59, 130, 246, 0.12);
+    }
+    .metric-card.active-card::before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        right: -1px;
+        height: 3px;
+        background: #2563EB;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
     }
     .metric-header {
         display: flex;
@@ -114,45 +117,41 @@ st.markdown("""
         align-items: center;
     }
     .metric-title {
-        font-size: 0.82rem;
+        font-size: 0.78rem;
         font-weight: 700;
         color: #64748B;
         text-transform: uppercase;
-        letter-spacing: 0.7px;
-    }
-    .metric-icon {
-        font-size: 1.4rem;
-        opacity: 0.85;
+        letter-spacing: 0.6px;
     }
     .metric-value {
-        font-size: 2.1rem;
+        font-size: 1.85rem;
         font-weight: 800;
         color: #0F172A;
-        margin-top: 0.5rem;
-        letter-spacing: -0.8px;
+        margin-top: 0.4rem;
+        letter-spacing: -0.7px;
         line-height: 1.1;
     }
     .metric-sub {
-        font-size: 0.83rem;
+        font-size: 0.8rem;
         font-weight: 600;
-        margin-top: 0.5rem;
+        margin-top: 0.4rem;
         display: flex;
         align-items: center;
         gap: 0.3rem;
     }
     .text-emerald { color: #059669; }
-    .text-indigo { color: #4F46E5; }
+    .text-indigo { color: #2563EB; }
     .text-amber { color: #D97706; }
     .text-rose { color: #E11D48; }
 
     /* Profile & Content Cards */
     .content-card {
         background: #FFFFFF;
-        border-radius: 16px;
-        padding: 2rem;
+        border-radius: 14px;
+        padding: 1.75rem;
         border: 1px solid #E2E8F0;
-        box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.03);
-        margin-bottom: 1.8rem;
+        box-shadow: 0 2px 8px -2px rgba(15, 23, 42, 0.04);
+        margin-bottom: 1.5rem;
     }
 
     /* Status Badges */

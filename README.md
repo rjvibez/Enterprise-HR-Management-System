@@ -23,6 +23,7 @@ Features an executive web portal, real-time workforce analytics, full CRUD emplo
 * ✏️ **Employee Record Editor**: Edit any employee's details (Name, Email, Phone, Department, Designation, Salary, Status).
 * 🗑️ **Safe Deletion Workflow**: Danger zone warning banner, explicit table delete buttons, profile drawer delete button, and safety confirmation dialogs.
 * 💾 **Dual Storage Persistence**: Zero-configuration SQLite engine (`data/hr_management.db`) with auto CSV seeding, and support for MySQL.
+* 🤖 **AI & LLM Integration**: Configured for Groq API using primary model `openai/gpt-oss-20b` (transitioned from `llama-3.3-70b-versatile`).
 * ⚡ **Dual App Engines**: Run via **Streamlit UI** (`http://localhost:8501`) or **Next.js Frontend** (`http://localhost:3000`).
 
 ---
@@ -82,6 +83,14 @@ FastAPI backend server runs on `http://127.0.0.1:8000` with interactive Swagger 
 | `PUT` | `/employees/{employee_id}` | Update Employee Record / Salary | `salary`, Body: `EmployeeUpdateSchema` |
 | `DELETE` | `/employees/{employee_id}` | Delete Employee Record | - |
 | `POST` | `/seed` | Re-seed Database from CSV | - |
+
+---
+
+## 🤖 AI & LLM Model Configuration
+
+The application is configured to use Groq API with the updated replacement model:
+* **Active Model**: `openai/gpt-oss-20b` *(Replaced decommissioned `llama-3.3-70b-versatile`)*
+* **Environment Variable**: `GROQ_MODEL=openai/gpt-oss-20b`
 
 ---
 

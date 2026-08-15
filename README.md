@@ -1,16 +1,16 @@
 # 🏢 Nova HR | Enterprise Management System
 
-![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
-![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
+![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
 
-An end-to-end, executive-grade **Nova HR Enterprise Management System** built with **Python**, **FastAPI**, **Streamlit**, **Next.js 16**, **SQLite/MySQL**, and **Tailwind CSS**. 
+An end-to-end, executive-grade **Nova HR Enterprise Management System** built with **Next.js 16**, **Vercel**, **Python**, **FastAPI**, **Streamlit**, **SQLite/MySQL**, and **Tailwind CSS**. 
 
-Features an executive web portal, real-time workforce analytics, full CRUD employee management (Add, View, Search, Update, Delete), automated CSV seeding, REST API backend, and one-click cloud deployment readiness for **Streamlit Cloud**.
+Features an executive web portal, real-time workforce analytics, full CRUD employee management (Add, View, Search, Update, Delete), automated CSV seeding, REST API backend, and cloud deployment readiness on **Vercel**.
 
-🌐 **Live Streamlit App**: [https://enterprise-hr-management-system.streamlit.app/](https://enterprise-hr-management-system.streamlit.app/)
+🌐 **Live Vercel Production Web App**: [https://enterprise-hr-management-roikokpd5-rajesh-manis-projects.vercel.app/](https://enterprise-hr-management-roikokpd5-rajesh-manis-projects.vercel.app/)
 
 ---
 
@@ -162,18 +162,20 @@ git push origin main
 
 ---
 
-## ☁️ Deploying to Streamlit Cloud
+## ☁️ Deploying to Vercel
 
 1. Push your repository to **GitHub**:
    ```bash
    git add .
-   git commit -m "Deploy Nova HR Enterprise Management System"
+   git commit -m "Deploy Nova HR Enterprise Management System to Vercel"
    git push origin main
    ```
-2. Go to **[share.streamlit.io](https://share.streamlit.io)**.
-3. Click **"New App"** and select repository: `Enterprise-HR-Management-System`.
-4. Set Main File Path: `streamlit_app.py`.
-5. Click **"Deploy!"**.
+2. Go to **[Vercel Dashboard](https://vercel.com/dashboard)**.
+3. Click **"Add New..."** ➔ **"Project"** and import repository: `Enterprise-HR-Management-System`.
+4. Set Root Directory to `frontend`.
+5. Click **"Deploy"**. Future pushes to `main` branch will automatically trigger production re-deployments!
+
+🌐 **Live Vercel Production Web App**: [https://enterprise-hr-management-roikokpd5-rajesh-manis-projects.vercel.app/](https://enterprise-hr-management-roikokpd5-rajesh-manis-projects.vercel.app/)
 
 ---
 
